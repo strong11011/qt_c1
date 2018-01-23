@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -78,9 +79,14 @@ int main(int argc,char** argv)
     struct sockaddr_in servaddr;
     int sockfd,n;
     char buf[1024 * 10];
-    //Rvs_SetLostConnectionCallback(LostConnectionCallback);
-    //Rvs_SetNewConnectionCallback(NewConnectionCallback);
-    //Rvs_SetPacketReceiveCallback(PacketReceiveCallback);
+
+    sockfd=socket(AF_INET,SOCK_DGRAM,0);
+    bzero(&servaddr,sizeof(servaddr));
+
+
+    Rvs_SetLostConnectionCallback(LostConnectionCallback);
+    Rvs_SetNewConnectionCallback(NewConnectionCallback);
+    Rvs_SetPacketReceiveCallback(PacketReceiveCallback);
 	int err = Rvs_Init(5089);//³õÊ¼»¯À×´ï
 	if (RVS_NO_ERROR != err)
 	{
