@@ -13,7 +13,7 @@ extern "C"{
     typedef void ( RvsPacketReceiveCallback)(void* connectId, int cmd, const char* paramString);
 
 
-    //≥ı ºªØ
+    //system init
      int Rvs_Init(int port);
 
      void Rvs_Clean();

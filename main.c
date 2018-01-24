@@ -2,13 +2,17 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/wait.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <errno.h>
 #include "rvsapi.h"
 #include "RvsTypes.h"
 #include "rvscallback.h"
 
+#define SERV_PORT 50000
 //获取错误码，并返回错误类型名
 const char* GetErrorType(int err)
 {
@@ -78,25 +82,43 @@ int main(int argc,char** argv)
 {
     struct sockaddr_in servaddr;
     int sockfd,n;
+    int ret=0;
     char buf[1024 * 10];
 
-    sockfd=socket(AF_INET,SOCK_DGRAM,0);
+
+    //use TCP
+    sockfd=socket(AF_INET,SOCK_STREAM,0);
+
     bzero(&servaddr,sizeof(servaddr));
+    //use ip4
+    servaddr.sin_family=AF_INET;
+    inet_pton(AF_INET,"192.168.30.205",&servaddr.sin_addr);
+    servaddr.sin_port=htons(SERV_PORT);
+
+    while(0!=(ret=connect(sockfd,(struct sockaddr*) &servaddr,sizeof(servaddr))));
+
+        perror("connect error:");
+    close(sockfd);
 
 
-    Rvs_SetLostConnectionCallback(LostConnectionCallback);
-    Rvs_SetNewConnectionCallback(NewConnectionCallback);
-    Rvs_SetPacketReceiveCallback(PacketReceiveCallback);
-	int err = Rvs_Init(5089);//初始化雷达
-	if (RVS_NO_ERROR != err)
-	{
-		printf("%s\n", GetErrorType(err));//打印错误信息
-	}
 
-	puts("Waitting connection...");//等待连接
+    //write(sockfd,buf,strlen(buf));
 
-	while (g_hasNewConn == NULL)
-	{
+
+
+    //Rvs_SetLostConnectionCallback(LostConnectionCallback);
+    //Rvs_SetNewConnectionCallback(NewConnectionCallback);
+    //Rvs_SetPacketReceiveCallback(PacketReceiveCallback);
+    //int err = Rvs_Init(5089);//初始化雷达
+    //if (RVS_NO_ERROR != err)
+    //{
+    //	printf("%s\n", GetErrorType(err));//打印错误信息
+    //}
+
+    //puts("Waitting connection...");//等待连接
+
+    //while (g_hasNewConn == NULL)
+    /*{
         sleep(1);
 	}
 
@@ -131,6 +153,6 @@ int main(int argc,char** argv)
 	}
 
 
-	getchar();
+    */
 	return 0;
 }
