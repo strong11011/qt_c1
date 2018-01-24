@@ -75,7 +75,7 @@ const char* GetCmdType(RvsCmd cmd)
 }
 int main(int argc,char** argv)
 {
-    struct sockaddr_in servaddr;
+    /*struct sockaddr_in servaddr;
     int sockfd,n;
     char buf[1024 * 10];
     //Rvs_SetLostConnectionCallback(LostConnectionCallback);
@@ -123,6 +123,7 @@ int main(int argc,char** argv)
 	{
 		printf("Failed :%s\n\n", GetErrorType(err));
 	}
+    */
 
 
 	getchar();
