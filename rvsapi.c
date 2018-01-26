@@ -3,7 +3,6 @@ extern volatile pid_t g_hasNewConn;
 //device inti
 int Rvs_Init(int port)
 {
-
 	return 0;
 }
 

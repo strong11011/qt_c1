@@ -11,4 +11,5 @@ SOURCES += \
 HEADERS += \
     rvsapi.h \
     RvsTypes.h \
-    rvscallback.h
+    rvscallback.h \
+    rvsinit.h
