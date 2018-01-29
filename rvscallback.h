@@ -17,10 +17,11 @@
 
 extern volatile pid_t g_hasNewConn;
 
+//get error type
 const char* GetErrorType(int err);
-
+//get cmd type
 const char* GetCmdType(RvsCmd cmd);
-
+//
 void LostConnectionCallback(pid_t connectId, const char* ip, int port);
 
 void NewConnectionCallback(pid_t connectId, const char* ip, int port);
