@@ -15,7 +15,19 @@ void Rvs_Clean()
 void Rvs_SetNewConnectionCallback(RvsConnectionEventCallback *callback)
 {
 
-    callback(g_hasNewConn,"192.168.30.205", 50000);
+    pid_t pid_connect;
+    pid_connect=fork();
+    if(pid_connect==-1)
+    {
+        perror("fork err 1");
+    }
+    else if(pid_connect==0)
+    {
+
+        printf("connecting the radar......\n");
+        callback(pid_connect,"192.168.30.205", 50000);
+    }
+    //callback(pid_connect,"192.168.30.205", 50000);
 	return;
 }
 

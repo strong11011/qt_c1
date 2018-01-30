@@ -1,5 +1,6 @@
 #include "rvscallback.h"
 
+
 volatile pid_t g_hasNewConn=0;
 //get error number return the type of error
 const char* GetErrorType(int err)
@@ -78,12 +79,14 @@ void NewConnectionCallback(pid_t connectId, const char* ip, int port)
     struct sockaddr_in servaddr;
     int sockfd;
     int ret=0;
-    pid_t pid;
+
     int n=0;
 
-    unsigned char buf[10]={0};
-    unsigned char buf1[50]={0};
+    unsigned char bufSend[1024]={0};
+    unsigned char bufReceive[1024]={0};
 
+    Cmd_ToPacket(1, bufSend );
+/*
     buf[0]=0xa5;
     buf[1]=0x5a;
     buf[2]=0x10;//src_addr pc
@@ -93,7 +96,7 @@ void NewConnectionCallback(pid_t connectId, const char* ip, int port)
     buf[6]=0x00;
     buf[7]=buf[2]+buf[3]+buf[4]+buf[5]+buf[6];
     //buf[8]=0xf8;
-
+*/
 
     sockfd=socket(AF_INET,SOCK_STREAM,0);
     bzero(&servaddr,sizeof(servaddr));
@@ -102,36 +105,24 @@ void NewConnectionCallback(pid_t connectId, const char* ip, int port)
     inet_pton(AF_INET,ip,&servaddr.sin_addr);
     servaddr.sin_port=htons(50000);
 
-    pid=fork();
-    if(pid<0)
-    {
-        perror("fork connect error:");
-        exit(-1);
-    }
-    if(pid>0)
-    {
-
-    }
     ret=connect(sockfd,(struct sockaddr*) &servaddr,sizeof(servaddr));
-    g_hasNewConn=pid;
+    if(!ret)
+        printf("connecting success!!\n");
+
+    g_hasNewConn=connectId;
     connectId=g_hasNewConn;
-
-    write(sockfd,buf,8);
-   // n=read(sockfd,buf1,50);
-
-    while(n=read(sockfd,buf1,50))
+    write(sockfd,bufSend,8);
+    printf("waiting signal...\n");
+    while(n=read(sockfd,bufReceive,1024))
     {
-        //if(buf1[4]!=0xa2)
-            //continue;
+        if(bufReceive[4]!=0xa2)
+           continue;
         for(int i=0;i<n;i++)
         {
-            if(buf[i]==0xa5&&buf[i+1]==0x5a)
-            {
-                printf("\n");
-            }
-            printf("%x",buf1[i]);
-            buf1[i]=0;
+            printf("%x",bufReceive[i]);
         }
+        printf("\n");
+        //sleep(1);
 
     }
 
@@ -186,4 +177,16 @@ int SetParamString(  char *buf,int cmd,const char* paramString)
     }
 
     return 0;
+}
+
+int Cmd_ToPacket(int cmd, char * pout )
+{
+    switch (cmd) {
+    case 1:Load_Cmd_Connection(pout);
+
+
+        break;
+    default:
+        break;
+    }
 }

@@ -13,7 +13,40 @@
 #include "rvscallback.h"
 
 
+void mymenu(void)
+{
+    printf("======================================\n");
+    printf("1. Connect the radar server\n");
+    printf("2. Disconnect the radar server\n");
+    printf("3. Get radar state.\n");
+    printf("4. Defence area arm.\n");
+    printf("5. Defence area disarm.\n");
+    printf("6. Defence area state upload.\n");
+    printf("7. Defence area alarm upload.\n");
+    printf("8. Targets state upload.\n");
+    printf("======================================\n");
+}
+
 int main(int argc,char** argv)
+{
+    int ret=0;
+    for(;;)
+    {
+       //display the main menu
+        mymenu();
+        scanf("%d",&ret);
+        switch (ret)
+        {
+            case 1:Rvs_SetNewConnectionCallback(NewConnectionCallback);
+                break;
+            case 2:
+            default:
+                break;
+        }
+    }
+}
+
+int main1(int argc,char** argv)
 {
 
 

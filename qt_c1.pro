@@ -6,10 +6,12 @@ CONFIG -= qt
 SOURCES += \
     main.c \
     rvsapi.c \
-    rvscallback.c
+    rvscallback.c \
+    loadcmd.c
 
 HEADERS += \
     rvsapi.h \
     RvsTypes.h \
     rvscallback.h \
-    rvsinit.h
+    rvsinit.h \
+    loadcmd.h
