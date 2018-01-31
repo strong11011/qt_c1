@@ -14,7 +14,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include "RvsTypes.h"
-#include "loadcmd.h"
+#include "rvswritecmd.h"
 
 extern volatile pid_t g_hasNewConn;
 

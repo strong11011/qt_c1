@@ -1,0 +1,7 @@
+#ifndef READDATA_H
+#define READDATA_H
+
+int Read_Data_Judje(const unsigned char *pin,int* n);
+
+
+#endif // READDATA_H

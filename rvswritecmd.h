@@ -3,7 +3,7 @@
 
 int Load_Cmd_Connection( unsigned char* p);
 int load_Cmd_Disconnection( unsigned char* p);
-int load_connection( unsigned char* p);
+int load_Cmd_Targets_State_Upload( unsigned char* p);
 int load_connection( unsigned char* p);
 int load_connection( unsigned char* p);
 int load_connection( unsigned char* p);

@@ -7,11 +7,13 @@ SOURCES += \
     main.c \
     rvsapi.c \
     rvscallback.c \
-    loadcmd.c
+    rvswritecmd.c \
+    rvsreaddata.c
 
 HEADERS += \
     rvsapi.h \
     RvsTypes.h \
     rvscallback.h \
     rvsinit.h \
-    loadcmd.h
+    rvswritecmd.h \
+    rvsreaddata.h

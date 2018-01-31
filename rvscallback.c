@@ -86,18 +86,6 @@ void NewConnectionCallback(pid_t connectId, const char* ip, int port)
     unsigned char bufReceive[1024]={0};
 
     Cmd_ToPacket(1, bufSend );
-/*
-    buf[0]=0xa5;
-    buf[1]=0x5a;
-    buf[2]=0x10;//src_addr pc
-    buf[3]=0x60;//dis_addr sp100
-    buf[4]=0x0a;
-    buf[5]=0x00;
-    buf[6]=0x00;
-    buf[7]=buf[2]+buf[3]+buf[4]+buf[5]+buf[6];
-    //buf[8]=0xf8;
-*/
-
     sockfd=socket(AF_INET,SOCK_STREAM,0);
     bzero(&servaddr,sizeof(servaddr));
     //use ip4
@@ -111,15 +99,14 @@ void NewConnectionCallback(pid_t connectId, const char* ip, int port)
 
     g_hasNewConn=connectId;
     connectId=g_hasNewConn;
-    write(sockfd,bufSend,8);
+    //write(sockfd,bufSend,8);
     printf("waiting signal...\n");
     while(n=read(sockfd,bufReceive,1024))
     {
-        if(bufReceive[4]!=0xa2)
-           continue;
+
         for(int i=0;i<n;i++)
         {
-            printf("%x",bufReceive[i]);
+            printf("%02x ",bufReceive[i]);
         }
         printf("\n");
         //sleep(1);

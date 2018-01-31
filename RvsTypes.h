@@ -1,15 +1,12 @@
 #pragma once
 
-
 #define PROTOCOL_HEAD "NOVASKY"
 #define PROTOCOL_END "END"
-
 #define SPILTER_PART "@@"
 #define SPILTER_PARAM ";"
 #define SPILTER_OBJECT "##"
 #define SPILTER_OBJECT_PARAM "%%"
 #define PARAM_EMPTY "Empty"
-
 
 typedef enum RvsCmdEnum
 {

@@ -55,11 +55,6 @@ int main1(int argc,char** argv)
     //Rvs_SetPacketReceiveCallback(PacketReceiveCallback);
      char buf[1024 * 10];
     int err = Rvs_Init(5089);//初始化雷达
-    //if (RVS_NO_ERROR != err)
-    //{
-    //	printf("%s\n", GetErrorType(err));//打印错误信息
-    //}
-
     puts("Waitting connection...");//等待连接
 //the main thread test the connect status
     while (g_hasNewConn == NULL)
